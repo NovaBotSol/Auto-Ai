@@ -1,20 +1,20 @@
 import { useNavigate } from 'react-router-dom';
-import { ChevronDown, ArrowRight, LineChart, Settings, PieChart, Shield, Zap, Bot } from 'lucide-react';
+import { ArrowRight, LineChart, Shield, Zap, Bot } from 'lucide-react';
 
 // Navigation Component
 const Navigation = () => {
   const navigate = useNavigate();
-
+  
   return (
     <nav className="fixed top-0 w-full bg-slate-900 border-b border-slate-800 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
-          <div className="flex items-center">
+          <div className="flex items-center gap-3">
             <span className="text-2xl font-bold text-white">AUTO AI</span>
             <img 
-              src="/Images/logo.png" 
+              src="images/logo.png" 
               alt="Auto AI Logo" 
-              className="h-8 ml-2" 
+              className="h-6 w-6 object-contain" 
             />
           </div>
           <div className="flex items-center space-x-6">
@@ -54,7 +54,7 @@ const Navigation = () => {
 // Hero Section
 const Hero = () => {
   const navigate = useNavigate();
-
+  
   return (
     <div className="bg-slate-900 pt-32 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -81,7 +81,7 @@ const Hero = () => {
 const Features = () => {
   const features = [
     {
-      icon: <Bot className="w-12 h-12 text-cyan-400" />, // Fixed JSX typing
+      icon: <Bot className="w-12 h-12 text-cyan-400" />,
       title: "Custom AI Configuration",
       description: "Tailor your trading bot's behavior to match your strategy and risk tolerance."
     },
@@ -148,9 +148,9 @@ const HowItWorks = () => {
         <h2 className="text-3xl font-bold text-white text-center mb-12">
           How It Works
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
           {steps.map((step, index) => (
-            <div key={index} className="relative">
+            <div key={index} className="relative text-center">
               <div className="text-5xl font-bold bg-gradient-to-r from-fuchsia-500 to-cyan-500 text-transparent bg-clip-text mb-4">{step.number}</div>
               <h3 className="text-xl font-semibold text-white mb-2">{step.title}</h3>
               <p className="text-slate-400">{step.description}</p>

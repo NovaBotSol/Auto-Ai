@@ -1,11 +1,10 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronDown, ArrowRight, LineChart, Settings, PieChart, Shield, Zap, Bot } from 'lucide-react';
 
 // Navigation Component
 const Navigation = () => {
   const navigate = useNavigate();
-  
+
   return (
     <nav className="fixed top-0 w-full bg-slate-900 border-b border-slate-800 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -55,7 +54,7 @@ const Navigation = () => {
 // Hero Section
 const Hero = () => {
   const navigate = useNavigate();
-  
+
   return (
     <div className="bg-slate-900 pt-32 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -82,7 +81,7 @@ const Hero = () => {
 const Features = () => {
   const features = [
     {
-      icon: <Bot className="w-12 h-12 text-cyan-400" />,
+      icon: <Bot className="w-12 h-12 text-cyan-400" />, // Fixed JSX typing
       title: "Custom AI Configuration",
       description: "Tailor your trading bot's behavior to match your strategy and risk tolerance."
     },
@@ -128,21 +127,16 @@ const HowItWorks = () => {
   const steps = [
     {
       number: "01",
-      title: "Create Account",
-      description: "Sign up and connect your Solana wallet to get started."
-    },
-    {
-      number: "02",
       title: "Configure AI",
       description: "Set your trading preferences and risk parameters."
     },
     {
-      number: "03",
+      number: "02",
       title: "Activate Bot",
       description: "Launch your AI bot and let it execute your strategy."
     },
     {
-      number: "04",
+      number: "03",
       title: "Monitor Progress",
       description: "Track performance and adjust settings as needed."
     }
@@ -154,7 +148,7 @@ const HowItWorks = () => {
         <h2 className="text-3xl font-bold text-white text-center mb-12">
           How It Works
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {steps.map((step, index) => (
             <div key={index} className="relative">
               <div className="text-5xl font-bold bg-gradient-to-r from-fuchsia-500 to-cyan-500 text-transparent bg-clip-text mb-4">{step.number}</div>

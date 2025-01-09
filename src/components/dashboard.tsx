@@ -3,9 +3,9 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { Settings, AlertTriangle, TrendingUp, TrendingDown, Clock, Activity, Lock, XCircle } from 'lucide-react';
 
 const Dashboard = () => {
-  const [keyInput, setKeyInput] = useState('');
-  const [showError, setShowError] = useState(false);
-  
+  const [keyInput, setKeyInput] = useState<string>('');
+  const [showError, setShowError] = useState<boolean>(false);
+
   // Empty performance data for inactive state
   const emptyPerformanceData = [
     { timestamp: '00:00', value: 0 },
@@ -17,7 +17,12 @@ const Dashboard = () => {
   ];
 
   const handleActivate = () => {
-    setShowError(true);
+    if (!keyInput) {
+      setShowError(true);
+    } else {
+      setShowError(false);
+      // Logic to activate the bot goes here
+    }
   };
 
   return (
@@ -45,12 +50,11 @@ const Dashboard = () => {
                 Activate
               </button>
             </div>
-            
             {showError && (
               <div className="mt-4 p-4 bg-fuchsia-900/50 border border-fuchsia-800 rounded-lg flex items-start">
                 <XCircle className="h-5 w-5 text-fuchsia-500 mr-2 flex-shrink-0 mt-0.5" />
                 <div className="text-fuchsia-200">
-                  Error: your AUTOAI key is incorrect. Please contact support if error persists.
+                  Error: Your AUTOAI key is incorrect or empty. Please contact support if the error persists.
                 </div>
               </div>
             )}

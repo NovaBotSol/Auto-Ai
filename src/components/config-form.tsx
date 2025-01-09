@@ -4,34 +4,27 @@ import { AlertTriangle, Check } from 'lucide-react';
 
 const ConfigurationForm = () => {
   const navigate = useNavigate();
-  const [currentStep, setCurrentStep] = useState(1);
-  const [formData, setFormData] = useState({
-    // Risk Profile
-    riskTolerance: '',
-    maxLossPerTrade: '',
-    dailyLossLimit: '',
-    
-    // Trading Strategy
-    tradingGoals: [],
-    
-    // Technical Parameters
-    stopLoss: '',
-    takeProfit: '',
-    trailingStop: false,
-    
-    // Token Preferences
-    avoidTokens: [],
-    preferredTokens: [],
-    
-    // Advanced Settings
-    whaleTracking: false,
-    whaleMinimumAmount: '',
-    snipeNewTokens: false,
-    buyDips: false,
-    dipPercentage: ''
-  });
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [formData, setFormData] = useState<{ [key: string]: any }>(
+    {
+      riskTolerance: '',
+      maxLossPerTrade: '',
+      dailyLossLimit: '',
+      tradingGoals: [],
+      stopLoss: '',
+      takeProfit: '',
+      trailingStop: false,
+      avoidTokens: [],
+      preferredTokens: [],
+      whaleTracking: false,
+      whaleMinimumAmount: '',
+      snipeNewTokens: false,
+      buyDips: false,
+      dipPercentage: ''
+    }
+  );
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -146,9 +139,9 @@ const ConfigurationForm = () => {
     }
   ];
 
-  const handleMultiSelect = (name, value) => {
+  const handleMultiSelect = (name: string, value: string) => {
     setFormData(prev => {
-      const currentValues = prev[name];
+      const currentValues = prev[name] as string[];
       if (currentValues.includes(value)) {
         return {
           ...prev,
@@ -162,7 +155,7 @@ const ConfigurationForm = () => {
     });
   };
 
-  const validateStep = (step) => {
+  const validateStep = (step: number) => {
     const currentFields = steps[step - 1].fields;
     for (const field of currentFields) {
       if (field.conditional && !formData[field.conditional]) {
@@ -192,59 +185,34 @@ const ConfigurationForm = () => {
   };
 
   const handleSubmit = async () => {
-    // Here you would typically send the configuration to your backend
     console.log('Final configuration:', formData);
-    // Navigate to dashboard after submission
     navigate('/dashboard');
   };
 
   return (
     <div className="min-h-screen bg-slate-900 p-6 flex items-center justify-center">
       <div className="w-full max-w-2xl bg-slate-800 rounded-lg p-6">
-        {/* Progress indicator */}
         <div className="mb-8">
           <div className="flex justify-between mb-2">
             {steps.map((step, index) => (
-              <div 
-                key={index}
-                className={`w-full ${
-                  index < steps.length - 1 ? 'relative' : ''
-                }`}
-              >
-                <div 
-                  className={`h-2 rounded-full ${
-                    index + 1 <= currentStep
-                      ? 'bg-fuchsia-500'
-                      : 'bg-slate-600'
-                  }`}
-                />
-                <div className="mt-2 text-center text-sm text-slate-400">
-                  {step.title}
-                </div>
+              <div key={index} className={`w-full ${index < steps.length - 1 ? 'relative' : ''}`}>
+                <div className={`h-2 rounded-full ${index + 1 <= currentStep ? 'bg-fuchsia-500' : 'bg-slate-600'}`} />
+                <div className="mt-2 text-center text-sm text-slate-400">{step.title}</div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Current step form fields */}
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-white mb-6">
-            {steps[currentStep - 1].title}
-          </h2>
-          
+          <h2 className="text-2xl font-bold text-white mb-6">{steps[currentStep - 1].title}</h2>
           <div className="space-y-6">
             {steps[currentStep - 1].fields.map((field, index) => {
-              // Only show conditional fields if their condition is met
               if (field.conditional && !formData[field.conditional]) {
                 return null;
               }
-
               return (
                 <div key={index} className="space-y-2">
-                  <label className="block text-white">
-                    {field.label}
-                  </label>
-                  
+                  <label className="block text-white">{field.label}</label>
                   {field.type === 'select' && (
                     <select
                       name={field.name}
@@ -254,13 +222,10 @@ const ConfigurationForm = () => {
                     >
                       <option value="">Select an option</option>
                       {field.options.map((option, i) => (
-                        <option key={i} value={option.value}>
-                          {option.label}
-                        </option>
+                        <option key={i} value={option.value}>{option.label}</option>
                       ))}
                     </select>
                   )}
-
                   {field.type === 'multiSelect' && (
                     <div className="space-y-2">
                       {field.options.map((option, i) => (
@@ -272,17 +237,11 @@ const ConfigurationForm = () => {
                             onChange={() => handleMultiSelect(field.name, option.value)}
                             className="mr-2"
                           />
-                          <label 
-                            htmlFor={`${field.name}-${option.value}`}
-                            className="text-slate-300"
-                          >
-                            {option.label}
-                          </label>
+                          <label htmlFor={`${field.name}-${option.value}`} className="text-slate-300">{option.label}</label>
                         </div>
                       ))}
                     </div>
                   )}
-
                   {field.type === 'number' && (
                     <input
                       type="number"
@@ -293,7 +252,6 @@ const ConfigurationForm = () => {
                       className="w-full bg-slate-700 text-white rounded-lg p-3 border border-slate-600"
                     />
                   )}
-
                   {field.type === 'checkbox' && (
                     <div className="flex items-center">
                       <input
@@ -312,29 +270,19 @@ const ConfigurationForm = () => {
           </div>
         </div>
 
-        {/* Navigation buttons */}
         <div className="flex justify-between">
           <button
             onClick={handlePrevious}
             disabled={currentStep === 1}
-            className={`px-6 py-3 rounded-lg ${
-              currentStep === 1
-                ? 'bg-slate-600 cursor-not-allowed'
-                : 'bg-slate-700 hover:bg-slate-600'
-            } text-white`}
+            className={`px-6 py-3 rounded-lg ${currentStep === 1 ? 'bg-slate-600 cursor-not-allowed' : 'bg-slate-700 hover:bg-slate-600'} text-white`}
           >
             Previous
           </button>
-
           {currentStep < steps.length ? (
             <button
               onClick={handleNext}
               disabled={!validateStep(currentStep)}
-              className={`px-6 py-3 rounded-lg ${
-                validateStep(currentStep)
-                  ? 'bg-cyan-400 hover:bg-cyan-500 text-black'
-                  : 'bg-cyan-400/50 cursor-not-allowed text-black/50'
-              }`}
+              className={`px-6 py-3 rounded-lg ${validateStep(currentStep) ? 'bg-cyan-400 hover:bg-cyan-500 text-black' : 'bg-cyan-400/50 cursor-not-allowed text-black/50'}`}
             >
               Next
             </button>
@@ -342,11 +290,7 @@ const ConfigurationForm = () => {
             <button
               onClick={handleSubmit}
               disabled={!validateStep(currentStep)}
-              className={`px-6 py-3 rounded-lg ${
-                validateStep(currentStep)
-                  ? 'bg-cyan-400 hover:bg-cyan-500 text-black'
-                  : 'bg-cyan-400/50 cursor-not-allowed text-black/50'
-              } flex items-center`}
+              className={`px-6 py-3 rounded-lg ${validateStep(currentStep) ? 'bg-cyan-400 hover:bg-cyan-500 text-black' : 'bg-cyan-400/50 cursor-not-allowed text-black/50'} flex items-center`}
             >
               <span>Activate Bot</span>
               <Check className="ml-2 w-5 h-5" />

@@ -44,6 +44,18 @@ const Dashboard = () => {
               >
                 Activate
               </button>
+              <p className="text-sm text-slate-400 text-center">
+                Don't have an AUTOAI key yet? {' '}
+                <a 
+                  href="https://auto-ai-key.vercel.app/" 
+                  className="text-cyan-400 underline hover:text-cyan-300 transition-colors"
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  Click here
+                </a>
+                {' '}to purchase.
+              </p>
             </div>
             
             {showError && (

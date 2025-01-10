@@ -12,7 +12,7 @@ const Navigation = () => {
           <div className="flex items-center gap-3">
             <span className="text-2xl font-bold text-white">AUTO AI</span>
             <img 
-              src="public/images/logo.png" 
+              src="public/Images/logo.png" 
               alt="Auto AI Logo" 
               className="h-10 w-10 object-contain" 
             />

@@ -8,7 +8,7 @@ interface Field {
   name: string;
   options?: { value: string; label: string; }[];
   placeholder?: string;
-  conditional?: string;
+  conditional?: keyof FormData;
 }
 
 interface FormData {
@@ -29,7 +29,7 @@ interface FormData {
 
 const ConfigurationForm = () => {
   const navigate = useNavigate();
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState<number>(1);
   const [formData, setFormData] = useState<FormData>({
     riskTolerance: '',
     maxLossPerTrade: '',
@@ -38,8 +38,6 @@ const ConfigurationForm = () => {
     stopLoss: '',
     takeProfit: '',
     trailingStop: false,
-    avoidTokens: [],
-    preferredTokens: [],
     whaleTracking: false,
     whaleMinimumAmount: '',
     snipeNewTokens: false,
@@ -57,7 +55,7 @@ const ConfigurationForm = () => {
     }));
   };
 
-  const steps = [
+  const steps: { title: string; fields: Field[] }[] = [
     {
       title: "Risk Profile",
       fields: [
